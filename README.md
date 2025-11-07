@@ -78,3 +78,51 @@ As all checks returned clean, no further data cleaning steps were required.
 - ​No significant skewness was detected in any of the numerical variables, indicating a relatively balanced distribution across the dataset.
 
 ## Model Training Summary
+### 1. K-Means
+
+**​​Number of clusters = 16**
+
+**Training Summary​:**
+- Using the elbow method, the optimal number of clusters was identified around 15 to 16, where the curve of inertia reduction begins to plateau (Figure 2), indicating diminishing returns in model improvement beyond this point.
+- The silhouette score further validated this choice, suggesting 16 as the most appropriate value for k, based on cluster cohesion and separation.
+- As shown in Figure 3, the clusters are not solely differentiated by mental health risk levels. Instead, they exhibit subtle variations across multiple dimensions, which must be carefully interpreted before applying these clusters in practical settings. These nuanced differences could offer deeper insights into employee well-being beyond simple risk categorization.
+
+### 2. Agglomerative clustering (Ward Linkage)
+​
+**Number of clusters = 2​​​​**
+**Training Summary​:**
+- The dendrogram analysis revealed a noticeable jump in linkage distance when the number of clusters was reduced to 23, suggesting a potential cutoff point (Figure 4).
+- To validate this, the silhouette score was computed across a range of cluster values from K = 2 to K = 23. The results indicated that K = 2 yields the highest silhouette score, confirming it as the optimal number of clusters.
+- Cluster Characteristics (Figure 5)
+  - Cluster 1: Characterized by higher anxiety_score, higher social_support_score, and a slightly elevated mental health risk.
+  - Cluster 2: Defined by higher depression_score and more physical_activity_days
+
+### 3. Mean Shift
+
+​​​**Number of clusters = 3**
+​
+**Training Summary​:​**
+- The initial bandwidth suggested by the estimate_bandwidth function was 2.62, which resulted in a single cluster—likely due to the standardized feature range (−1 to 1).
+- To improve granularity, the bandwidth was manually tuned to 1.5, which produced 3 distinct clusters, offering more meaningful segmentation.
+- Cluster Characteristics (Figure 6)
+  - Cluster 1: Characterized by higher anxiety_score, more physical_activity_days, lower social_support_score, and elevated mental health risk.
+  - Cluster 2: Defined by higher anxiety_score, higher social_support_score, and a relatively lower mental health risk.
+  - Cluster 3: Exhibits higher depression_score, more physical_activity_days, greater sleep_hours, higher social_support_score, and a moderate mental health risk.
+ 
+## Main Findings
+Each clustering algorithm produced a different number of clusters, reflecting varying levels of granularity and practical applicability:
+
+​**K-Means (16 clusters):​**
+
+While this model offers detailed segmentation, the high number of clusters may be impractical for real-world implementation. It could be challenging to interpret and act on such fine distinctions across groups.
+ 
+**Agglomerative Clustering (Ward Linkage, 2 clusters):**
+This approach yields the simplest structure, which may support rapid deployment. However, the binary grouping may oversimplify the complexity of employee mental health profiles, potentially limiting the effectiveness of targeted interventions.
+
+**Mean Shift (3 clusters):**
+This model strikes a balance between simplicity and nuance. With three distinct clusters, it allows for faster implementation while still capturing meaningful differences in mental health risk and related features.
+
+## Conclusion
+Based on clustering performance, interpretability, and practical relevance, the Mean Shift model (3 clusters) emerges as the most suitable choice for this dataset and topic. It offers a manageable number of groups while preserving enough detail to inform thoughtful, targeted action plans for employee mental health support.
+
+To address the collinearity between depression_score and productivity_score, this analysis excluded productivity_score from the feature set. However, PCA offers an alternative by transforming correlated features into uncorrelated principal components, allowing both variables to contribute meaningfully without redundancy.
