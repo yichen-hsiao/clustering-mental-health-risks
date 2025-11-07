@@ -2,20 +2,22 @@
 
 ## Content
 
-- [Background & Problem Statement](#background--problem-statement)
 - [Objective](#objective)
-- [Method](#method)
-- [Execution Steps](#execution-steps)
+- [Dataset](#dataset)
+- [Tools](#tools)
+- [Clustering Algorithms](#clustering-algorithms)
+- [Data Cleaning](#data-cleaning)
+- [Feature Engineering](#feature-engineering)
+- [Model Training Summary](#model-training-summary)
 - [Main Findings](#main-findings)
 - [Conclusion](#conclusion)
+
 
 ## Objective
 This project aims to develop and evaluate three machine learning algorithms to cluster employee mental health risk profiles. The ultimate goal is to identify the model that best supports risk recognition and provides actionable insights for employers to take early preventive measures.
 
 
 ## Dataset
-Source: ​[Mental Health dataset from Kaggle](https://www.kaggle.com/datasets/mahdimashayekhi/mental-health)
-
 The dataset is a synthetic simulation that reflects real-world patterns observed in workplace mental health data. The dataset includes 10,000 individuals and 14 variables, encompassing demographic attributes such as age, gender, and employment type, as well as information about the work environment, mental health scores, and related actions.
 
 **Data Summary:**
@@ -37,6 +39,7 @@ The dataset is a synthetic simulation that reflects real-world patterns observed
 | Productivity Score        | Average: 77.3                           |
 | Mental Health Risk        | High (24%); Medium (59%); Low (17%)     |
 
+Source: ​[Mental Health dataset from Kaggle](https://www.kaggle.com/datasets/mahdimashayekhi/mental-health)
 
 ## Tools 
 Python, Jupyter Notebook, Visual Studio Code
@@ -60,6 +63,8 @@ As all checks returned clean, no further data cleaning steps were required.
 - A strong negative correlation was observed between depression_score and productivity_score, with a correlation coefficient of -0.93, indicating that higher levels of depression are closely associated with reduced productivity.
 - No significant signs of collinearity were detected among the remaining variables, suggesting that each contributes uniquely to the clustering process.
 - Pair plot analysis shows no clear linear relationships among the remaining​ variables. However, it reveals that the distribution of each feature varies distinctly across the three levels of mental_health_risk: Low, Medium, and High (Figure 1).
+
+  <img src="images/Figure 1.png" width="700"/>
 
 **Feature Selection:** 
 - Given the requirements of the clustering algorithms, only numerical variables were retained as features. Additionally, productivity_score was excluded due to its high collinearity with depression_score, which could distort clustering outcomes.
@@ -87,6 +92,8 @@ As all checks returned clean, no further data cleaning steps were required.
 - The silhouette score further validated this choice, suggesting 16 as the most appropriate value for k, based on cluster cohesion and separation.
 - As shown in Figure 3, the clusters are not solely differentiated by mental health risk levels. Instead, they exhibit subtle variations across multiple dimensions, which must be carefully interpreted before applying these clusters in practical settings. These nuanced differences could offer deeper insights into employee well-being beyond simple risk categorization.
 
+  <img src="images/Figure 2.png" width="350"/> <img src="images/Figure 3.png" width="390"/>
+
 ### 2. Agglomerative clustering (Ward Linkage)
 ​
 **Number of clusters = 2​​​​**
@@ -96,6 +103,9 @@ As all checks returned clean, no further data cleaning steps were required.
 - Cluster Characteristics (Figure 5)
   - Cluster 1: Characterized by higher anxiety_score, higher social_support_score, and a slightly elevated mental health risk.
   - Cluster 2: Defined by higher depression_score and more physical_activity_days
+
+
+    <img src="images/Figure 4 - 5.png" width="600"/>
 
 ### 3. Mean Shift
 
@@ -108,7 +118,9 @@ As all checks returned clean, no further data cleaning steps were required.
   - Cluster 1: Characterized by higher anxiety_score, more physical_activity_days, lower social_support_score, and elevated mental health risk.
   - Cluster 2: Defined by higher anxiety_score, higher social_support_score, and a relatively lower mental health risk.
   - Cluster 3: Exhibits higher depression_score, more physical_activity_days, greater sleep_hours, higher social_support_score, and a moderate mental health risk.
- 
+
+     <img src="images/Figure 6.png" width="600"/>
+   
 ## Main Findings
 Each clustering algorithm produced a different number of clusters, reflecting varying levels of granularity and practical applicability:
 
